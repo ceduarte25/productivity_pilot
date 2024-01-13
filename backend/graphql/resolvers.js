@@ -6,7 +6,9 @@ const prisma = new PrismaClient()
 
 export const resolvers = {
   Query: {
-    tasks: async () => {
+    tasks: async (_, { middlewareAuth }) => {
+      if (!middlewareAuth) throw new Error('Unauthenticated!')
+
       return prisma.task.findMany()
     },
     login: async (_, { email, password }) => {
@@ -28,7 +30,9 @@ export const resolvers = {
     },
   },
   Mutation: {
-    createTask: async (_, { title, note }) => {
+    createTask: async (_, { title, note, middlewareAuth }) => {
+      if (!middlewareAuth) throw new Error('Unauthenticated!')
+
       return prisma.task.create({
         data: {
           title,
