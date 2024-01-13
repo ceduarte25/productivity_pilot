@@ -2,11 +2,18 @@ import { gql } from 'apollo-server-express'
 
 export const typeDefs = gql`
   type Task {
-    id: Int
+    id: ID!
     title: String!
     note: String
-    createdAt: String
-    updatedAt: String
+    createdAt: String!
+    updatedAt: String!
+    createdById: String!
+  }
+
+  type User {
+    id: ID!
+    email: String!
+    password: String
   }
 
   type Query {
@@ -14,6 +21,7 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    createTask(title: String, note: String): Task
+    createTask(title: String!, note: String): Task
+    createUser(email: String!, password: String!): User
   }
 `
