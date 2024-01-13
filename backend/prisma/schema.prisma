@@ -1,3 +1,6 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -7,21 +10,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model task {
+model Task {
   id          Int      @id @default(autoincrement())
   title       String   @db.VarChar(255)
   note        String   @db.Text
   createdAt   DateTime @default(now())
-  updatedAt   DateTime
+  updatedAt   DateTime @updatedAt
   createdById String
-  user        user     @relation(fields: [createdById], references: [id], map: "Task_createdById_fkey")
-
-  @@index([createdById], map: "Task_createdById_fkey")
+  creator     User     @relation(fields: [createdById], references: [id])
 }
 
-model user {
-  id       String @id
-  email    String @unique(map: "User_email_key")
-  password String
-  task     task[]
+model User {
+  id           String @id @default(cuid())
+  email        String @unique
+  password     String
+  createdTasks Task[]
 }
