@@ -24,11 +24,11 @@ export const typeDefs = gql`
 
   type Query {
     tasks: [Task!]!
-    login(email: String!, password: String!): AuthData!
   }
 
   type Mutation {
     createTask(title: String!, note: String): Task
     createUser(email: String!, password: String!): User
+    login(email: String!, password: String!): AuthData!
   }
 `
