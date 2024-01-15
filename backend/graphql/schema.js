@@ -1,12 +1,13 @@
 import { gql } from 'apollo-server-express'
 
 export const typeDefs = gql`
+  scalar DateTime
+
   type Task {
     id: ID!
     title: String!
     note: String
-    createdAt: String!
-    updatedAt: String!
+    createdAt: DateTime!
     createdById: String!
   }
 
@@ -23,7 +24,7 @@ export const typeDefs = gql`
   }
 
   type Query {
-    tasks: [Task!]!
+    tasks(userId: String!): [Task!]!
   }
 
   type Mutation {

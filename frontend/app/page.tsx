@@ -1,10 +1,5 @@
-import { Button } from '@radix-ui/themes'
-import React from 'react'
+import TaskList from './_components/TaskList'
 
 export default function Home() {
-  return (
-    <main>
-      <Button>Lets go!</Button>
-    </main>
-  )
+  return <TaskList />
 }
