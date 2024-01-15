@@ -1,9 +1,8 @@
-import { Button, Container, Flex } from '@radix-ui/themes'
-import { IoLogoFacebook, IoLogoTwitter, IoLogoInstagram } from 'react-icons/io'
+import { Container, Flex } from '@radix-ui/themes'
 import Image from 'next/image'
-import React from 'react'
-import { IconType } from 'react-icons'
 import Link from 'next/link'
+import { IconType } from 'react-icons'
+import { IoLogoFacebook, IoLogoInstagram, IoLogoTwitter } from 'react-icons/io'
 
 export default function Footer() {
   const socials: { Icon: IconType; href: string }[] = [
