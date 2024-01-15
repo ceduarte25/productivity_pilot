@@ -21,6 +21,7 @@ const server = new ApolloServer({
     req,
     res,
     middlewareAuth: req.isAuthenticated,
+    userId: req.userId,
   }),
 })
 

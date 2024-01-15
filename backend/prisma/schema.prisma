@@ -15,7 +15,6 @@ model Task {
   title       String   @db.VarChar(255)
   note        String   @db.Text
   createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
   createdById String
   creator     User     @relation(fields: [createdById], references: [id])
 }
