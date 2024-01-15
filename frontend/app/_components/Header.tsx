@@ -1,10 +1,8 @@
 'use client'
 
-import React from 'react'
 import { Button, Container, Flex, HoverCard, Text } from '@radix-ui/themes'
 import Image from 'next/image'
 import { IoIosArrowDown } from 'react-icons/io'
-
 export default function Header() {
   return (
     <header className='bg-carelulu'>

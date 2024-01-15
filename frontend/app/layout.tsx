@@ -1,10 +1,11 @@
+import { Container, Theme } from '@radix-ui/themes'
 import '@radix-ui/themes/styles.css'
-import './globals.css'
-import { Theme, ThemePanel } from '@radix-ui/themes'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import Header from './Header'
-import Footer from './Footer'
+import ApolloClientProvident from './ApolloClientProvider'
+import Footer from './_components/Footer'
+import Header from './_components/Header'
+import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,11 +22,15 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <Theme radius='small'>
-          <Header />
-          {children}
-          <Footer />
-        </Theme>
+        <ApolloClientProvident>
+          <Theme radius='small'>
+            <Header />
+            <Container>
+              <main>{children}</main>
+            </Container>
+            <Footer />
+          </Theme>
+        </ApolloClientProvident>
       </body>
     </html>
   )
