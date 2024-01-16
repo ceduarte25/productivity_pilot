@@ -14,7 +14,7 @@ import { gql } from 'graphql-tag'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { ErrorMessage } from '../components'
+import { ErrorMessage, Spinner } from '../components'
 
 const LOGIN_USER = gql`
   mutation LoginUser($email: String!, $password: String!) {
@@ -43,9 +43,8 @@ export default function Authentication() {
       })
 
       localStorage.setItem('token', data.login.token)
-      console.log(`${data.login.token} you are now logged in!`)
+
       router.push('/')
-      router.refresh()
     } catch (error) {
       console.error(error)
     }
@@ -92,9 +91,7 @@ export default function Authentication() {
             </Link>
           </Button>
           <Button color='amber' disabled={loading}>
-            <Text className='text-white'>
-              {loading ? 'Signing in...' : 'Sign in'}
-            </Text>
+            <Text className='text-white'>{loading && <Spinner />} Sign in</Text>
           </Button>
           {/* <button type='submit'>submit</button> */}
         </Flex>

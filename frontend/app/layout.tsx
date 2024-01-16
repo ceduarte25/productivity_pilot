@@ -3,8 +3,7 @@ import '@radix-ui/themes/styles.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import ApolloClientProvident from './ApolloClientProvider'
-import Footer from './_components/Footer'
-import Header from './_components/Header'
+import { Footer, Header } from './_components'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })

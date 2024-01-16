@@ -1,0 +1,95 @@
+'use client'
+
+import { useMutation } from '@apollo/client'
+import { AlertDialog, Button, Flex, Text } from '@radix-ui/themes'
+import { gql } from 'graphql-tag'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { IoIosTrash } from 'react-icons/io'
+import { GET_TASKS } from '../_components/TaskList'
+import { Spinner } from '../components'
+
+const DELETE_TASK = gql`
+  mutation DeleteTask($id: Int!) {
+    deleteTask(id: $id)
+  }
+`
+
+export default function DeleteButton({ taskId }: { taskId: number }) {
+  const router = useRouter()
+
+  const [failed, setFailed] = useState(false)
+
+  const [deleteTask, { loading }] = useMutation(DELETE_TASK, {
+    onCompleted: () => {
+      router.push('/')
+    },
+    onError: (error) => {
+      console.error(error.message)
+    },
+    refetchQueries: [{ query: GET_TASKS }],
+  })
+
+  const handleDelete = async () => {
+    try {
+      await deleteTask({
+        variables: {
+          id: taskId,
+        },
+      })
+    } catch (error) {
+      setFailed(true)
+      console.log(error)
+    }
+  }
+
+  return (
+    <>
+      <AlertDialog.Root>
+        <AlertDialog.Trigger>
+          <Button color='red' disabled={loading} asChild>
+            <Text size={{ sm: '1', md: '2' }} className='!text-white'>
+              {loading && <Spinner />} <IoIosTrash size={20} />
+              Delete Task
+            </Text>
+          </Button>
+        </AlertDialog.Trigger>
+        <AlertDialog.Content>
+          <AlertDialog.Title>Delete Task</AlertDialog.Title>
+          <AlertDialog.Description>
+            Are you sure you want to delete this task? This action cannot be
+            undone.
+          </AlertDialog.Description>
+          <Flex mt='4' gap='3'>
+            <AlertDialog.Cancel>
+              <Button color='gray' variant='soft'>
+                Cancel
+              </Button>
+            </AlertDialog.Cancel>
+            <AlertDialog.Action>
+              <Button color='red' onClick={handleDelete}>
+                Delete
+              </Button>
+            </AlertDialog.Action>
+          </Flex>
+        </AlertDialog.Content>
+      </AlertDialog.Root>
+      <AlertDialog.Root open={failed}>
+        <AlertDialog.Content>
+          <AlertDialog.Title>Error</AlertDialog.Title>
+          <AlertDialog.Description>
+            This task cannot be deleted.
+          </AlertDialog.Description>
+          <Button
+            color='gray'
+            variant='soft'
+            mt='2'
+            onClick={() => setFailed(false)}
+          >
+            OK
+          </Button>
+        </AlertDialog.Content>
+      </AlertDialog.Root>
+    </>
+  )
+}

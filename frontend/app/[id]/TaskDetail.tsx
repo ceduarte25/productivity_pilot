@@ -1,13 +1,13 @@
 'use client'
 
 import { useQuery } from '@apollo/client'
-import { Badge, Box, Card, Flex, Heading, Table, Text } from '@radix-ui/themes'
+import { Box, Card, Flex, Heading, Table, Text } from '@radix-ui/themes'
 import { gql } from 'graphql-tag'
 import { useRouter } from 'next/navigation'
 import { Task } from '../_components/TaskList'
-import { ErrorMessage } from '../components'
+import { DateBadge, ErrorMessage } from '../components'
 
-const GET_TASKS = gql`
+const GET_TASK = gql`
   query GetTask($id: Int) {
     task(id: $id) {
       id
@@ -19,11 +19,11 @@ const GET_TASKS = gql`
   }
 `
 
-export default function TaskDetail({ id }: { id: number }) {
+export default function TaskDetail({ taskId }: { taskId: number }) {
   const router = useRouter()
 
-  const { loading, error, data } = useQuery(GET_TASKS, {
-    variables: { id },
+  const { loading, error, data } = useQuery(GET_TASK, {
+    variables: { id: taskId },
   })
 
   if (loading) return <p>Loading...</p>
@@ -40,7 +40,7 @@ export default function TaskDetail({ id }: { id: number }) {
   const task: Task = data.task
 
   return (
-    <Card className='m-5 p-3'>
+    <Card className='p-3'>
       <Heading as='h1'>Task List</Heading>
       <Table.Root>
         <Table.Body>
@@ -53,11 +53,7 @@ export default function TaskDetail({ id }: { id: number }) {
                   </Heading>
                   <Text>{task.note}</Text>
                 </Box>
-                <Badge size='1' color='amber'>
-                  <Text size='2'>
-                    {new Date(task.createdAt).toDateString()}
-                  </Text>
-                </Badge>
+                <DateBadge date={task.createdAt} />
               </Flex>
             </Table.Cell>
           </Table.Row>
