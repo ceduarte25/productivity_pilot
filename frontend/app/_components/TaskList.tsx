@@ -14,7 +14,7 @@ export interface Task {
   createdAt: string
 }
 
-const GET_TASKS = gql`
+export const GET_TASKS = gql`
   query GetTasks {
     tasks {
       id
