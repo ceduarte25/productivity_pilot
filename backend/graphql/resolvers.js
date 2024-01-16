@@ -54,6 +54,31 @@ export const resolvers = {
         },
       })
     },
+    deleteTask: async (_, { id }, { middlewareAuth, userId }) => {
+      if (!middlewareAuth) throw new Error('Unauthenticated!')
+
+      try {
+        const task = await prisma.task.findUnique({
+          where: {
+            createdById: userId,
+            id,
+          },
+        })
+
+        if (!task) throw new Error()
+
+        await prisma.task.delete({
+          where: {
+            id,
+          },
+        })
+
+        return true
+      } catch (error) {
+        console.error(error)
+        throw new Error(`Couldn't delete task.`)
+      }
+    },
     createUser: async (_, { email, password }) => {
       try {
         const hashedPassword = await bcrypt.hash(password, 12)

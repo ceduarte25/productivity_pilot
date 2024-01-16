@@ -14,7 +14,7 @@ export const typeDefs = gql`
   type User {
     id: ID!
     email: String!
-    password: String
+    password: String!
   }
 
   type AuthData {
@@ -29,8 +29,9 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    createTask(title: String!, note: String): Task
-    createUser(email: String!, password: String!): User
+    createTask(title: String!, note: String): Task!
+    deleteTask(id: Int!): Boolean!
+    createUser(email: String!, password: String!): User!
     login(email: String!, password: String!): AuthData!
   }
 `
