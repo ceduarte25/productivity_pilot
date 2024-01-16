@@ -4,9 +4,10 @@ import { useQuery } from '@apollo/client'
 import { Badge, Box, Card, Flex, Heading, Table, Text } from '@radix-ui/themes'
 import { gql } from 'graphql-tag'
 import { useRouter } from 'next/navigation'
+import { ErrorMessage, Link } from '../components'
 
-interface Task {
-  id: string
+export interface Task {
+  id: number
   title: string
   note: string
   createdById: string
@@ -14,8 +15,8 @@ interface Task {
 }
 
 const GET_TASKS = gql`
-  query GetTasks($userId: String!) {
-    tasks(userId: $userId) {
+  query GetTasks {
+    tasks {
       id
       title
       note
@@ -28,17 +29,16 @@ const GET_TASKS = gql`
 export default function TaskList() {
   const router = useRouter()
 
-  const { loading, error, data } = useQuery(GET_TASKS, {
-    variables: { userId },
-  })
+  const { loading, error, data } = useQuery(GET_TASKS)
 
   if (loading) return <p>Loading...</p>
   if (error) {
     if (error.message === 'Unauthenticated!') {
       router.push('/authentication')
+      router.refresh()
       return null
     } else {
-      return <p>Error: {error.message}</p>
+      return <ErrorMessage>{error.message}</ErrorMessage>
     }
   }
 
@@ -55,7 +55,7 @@ export default function TaskList() {
                 <Flex align='center' justify='between'>
                   <Box>
                     <Heading as='h2' size='5'>
-                      {task.title}
+                      <Link href={`/${task.id}`}>{task.title}</Link>
                     </Heading>
                     <Text>{task.note}</Text>
                   </Box>
@@ -68,11 +68,8 @@ export default function TaskList() {
               </Table.Cell>
             </Table.Row>
           ))}
-          <Flex direction='column'></Flex>
         </Table.Body>
       </Table.Root>
     </Card>
   )
 }
-
-const userId = ''
