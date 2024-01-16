@@ -1,5 +1,5 @@
 import { Box, Flex, Grid } from '@radix-ui/themes'
-import BackButton from './BackButton'
+import { BackButton } from '../components'
 import DeleteButton from './DeleteButton'
 import TaskDetail from './TaskDetail'
 

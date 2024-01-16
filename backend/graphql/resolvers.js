@@ -43,16 +43,20 @@ export const resolvers = {
     },
   },
   Mutation: {
-    createTask: async (_, { title, note, middlewareAuth }) => {
+    createTask: async (_, { title, note }, { middlewareAuth, userId }) => {
       if (!middlewareAuth) throw new Error('Unauthenticated!')
 
-      return prisma.task.create({
-        data: {
-          title,
-          note,
-          createdById: 'clrd69ads000099wc83w7oxtm',
-        },
-      })
+      try {
+        return prisma.task.create({
+          data: {
+            title,
+            note,
+            createdById: userId,
+          },
+        })
+      } catch (error) {
+        throw new Error(`Couldn't create task.`)
+      }
     },
     deleteTask: async (_, { id }, { middlewareAuth, userId }) => {
       if (!middlewareAuth) throw new Error('Unauthenticated!')
@@ -92,7 +96,7 @@ export const resolvers = {
 
         return createdUser
       } catch (error) {
-        throw new Error('User creation failed.')
+        throw new Error('User creation failed. Your email may already exist.')
       }
     },
     login: async (_, { email, password }) => {
