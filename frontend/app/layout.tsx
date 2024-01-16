@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang='en'>
       <body className={inter.className}>
         <ApolloClientProvident>
-          <Theme radius='small'>
+          <Theme radius='small' accentColor='cyan'>
             <Header />
             <Container>
               <main>{children}</main>
