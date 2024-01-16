@@ -24,7 +24,8 @@ export const typeDefs = gql`
   }
 
   type Query {
-    tasks(userId: String!): [Task!]!
+    tasks: [Task!]!
+    task(id: Int): Task!
   }
 
   type Mutation {
