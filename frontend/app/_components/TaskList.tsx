@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/client'
 import { Badge, Box, Card, Flex, Heading, Table, Text } from '@radix-ui/themes'
 import { gql } from 'graphql-tag'
 import { useRouter } from 'next/navigation'
-import { ErrorMessage, Link } from '../components'
+import { DateBadge, ErrorMessage, Link } from '../components'
 
 export interface Task {
   id: number
@@ -45,25 +45,21 @@ export default function TaskList() {
   const tasks = data.tasks
 
   return (
-    <Card className='m-5 p-3'>
+    <Card className='p-3'>
       <Heading as='h1'>Task List</Heading>
       <Table.Root>
         <Table.Body>
           {tasks.map((task: Task) => (
             <Table.Row key={task.id}>
               <Table.Cell>
-                <Flex align='center' justify='between'>
+                <Flex align='center' justify='between' gap='2'>
                   <Box>
-                    <Heading as='h2' size='5'>
+                    <Heading as='h2' size={{ initial: '2', sm: '4', md: '5' }}>
                       <Link href={`/${task.id}`}>{task.title}</Link>
                     </Heading>
-                    <Text>{task.note}</Text>
+                    <Text className='hidden  md:block'>{task.note}</Text>
                   </Box>
-                  <Badge size='1' color='amber'>
-                    <Text size='2'>
-                      {new Date(task.createdAt).toDateString()}
-                    </Text>
-                  </Badge>
+                  <DateBadge date={task.createdAt} />
                 </Flex>
               </Table.Cell>
             </Table.Row>
