@@ -8,7 +8,7 @@ export default function CreateTaskButton() {
       <Button asChild color='amber' className='justify-start'>
         <Link href='/new_task'>
           <CgGoogleTasks color='white' />{' '}
-          <Text className='text-white'>Create Task</Text>
+          <Text className='text-white'>Create New Task</Text>
         </Link>
       </Button>
     </Box>

@@ -27,14 +27,18 @@ const LOGIN_USER = gql`
 `
 
 export default function Authentication() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
   const router = useRouter()
 
-  const [loginUser, { loading, error }] = useMutation(LOGIN_USER)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const [loginUser, { error }] = useMutation(LOGIN_USER)
 
   const handleLogin = async () => {
     try {
+      setLoading(true)
+
       const { data } = await loginUser({
         variables: {
           email,
@@ -93,7 +97,6 @@ export default function Authentication() {
           <Button color='amber' disabled={loading}>
             <Text className='text-white'>{loading && <Spinner />} Sign in</Text>
           </Button>
-          {/* <button type='submit'>submit</button> */}
         </Flex>
       </form>
       {error && <ErrorMessage>{error.message}</ErrorMessage>}

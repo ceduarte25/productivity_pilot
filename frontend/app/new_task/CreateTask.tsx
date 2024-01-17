@@ -4,7 +4,6 @@ import { useMutation } from '@apollo/client'
 import {
   Box,
   Button,
-  Card,
   Flex,
   Heading,
   Text,
@@ -15,8 +14,7 @@ import { gql } from 'graphql-tag'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { GET_TASKS } from '../_components/TaskList'
-import { ErrorMessage, Spinner } from '../components'
-import { BackButton } from '../components'
+import { BackButton, ErrorMessage, Spinner } from '../components'
 
 const CREATE_TASK = gql`
   mutation CreateTask($title: String!, $note: String) {
@@ -31,11 +29,13 @@ const CREATE_TASK = gql`
 `
 
 export default function CreateTask() {
-  const [title, setTitle] = useState('')
-  const [note, setNote] = useState('')
   const router = useRouter()
 
-  const [createTask, { loading, error }] = useMutation(CREATE_TASK, {
+  const [title, setTitle] = useState('')
+  const [note, setNote] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const [createTask, { error }] = useMutation(CREATE_TASK, {
     onCompleted: () => {
       router.push('/')
     },
@@ -47,6 +47,8 @@ export default function CreateTask() {
 
   const handleCreateTask = async () => {
     try {
+      setLoading(true)
+
       await createTask({
         variables: {
           title,
