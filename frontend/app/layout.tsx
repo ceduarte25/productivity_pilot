@@ -5,6 +5,7 @@ import { Inter } from 'next/font/google'
 import ApolloClientProvident from './ApolloClientProvider'
 import { Footer, Header } from './_components'
 import './globals.css'
+import './theme-config.css'
 
 const inter = Inter({ subsets: ['latin'] })
 

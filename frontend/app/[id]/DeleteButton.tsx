@@ -18,9 +18,10 @@ const DELETE_TASK = gql`
 export default function DeleteButton({ taskId }: { taskId: number }) {
   const router = useRouter()
 
-  const [failed, setFailed] = useState(false)
+  const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  const [deleteTask, { loading }] = useMutation(DELETE_TASK, {
+  const [deleteTask] = useMutation(DELETE_TASK, {
     onCompleted: () => {
       router.push('/')
     },
@@ -32,13 +33,15 @@ export default function DeleteButton({ taskId }: { taskId: number }) {
 
   const handleDelete = async () => {
     try {
+      setLoading(true)
+
       await deleteTask({
         variables: {
           id: taskId,
         },
       })
     } catch (error) {
-      setFailed(true)
+      setError(true)
       console.log(error)
     }
   }
@@ -47,10 +50,10 @@ export default function DeleteButton({ taskId }: { taskId: number }) {
     <>
       <AlertDialog.Root>
         <AlertDialog.Trigger>
-          <Button color='red' disabled={loading} asChild>
+          <Button color='red' disabled={loading}>
             <Text size={{ sm: '1', md: '2' }} className='!text-white'>
-              {loading && <Spinner />} <IoIosTrash size={20} />
-              Delete Task
+              {loading && <Spinner />}{' '}
+              <IoIosTrash size={20} className='inline' /> Delete Task
             </Text>
           </Button>
         </AlertDialog.Trigger>
@@ -74,7 +77,7 @@ export default function DeleteButton({ taskId }: { taskId: number }) {
           </Flex>
         </AlertDialog.Content>
       </AlertDialog.Root>
-      <AlertDialog.Root open={failed}>
+      <AlertDialog.Root open={error}>
         <AlertDialog.Content>
           <AlertDialog.Title>Error</AlertDialog.Title>
           <AlertDialog.Description>
@@ -84,7 +87,7 @@ export default function DeleteButton({ taskId }: { taskId: number }) {
             color='gray'
             variant='soft'
             mt='2'
-            onClick={() => setFailed(false)}
+            onClick={() => setError(false)}
           >
             OK
           </Button>
