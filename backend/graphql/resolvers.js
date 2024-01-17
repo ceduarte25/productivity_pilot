@@ -16,8 +16,6 @@ export const resolvers = {
           },
         })
 
-        if (!tasks[0].createdById) throw new Error()
-
         return tasks
       } catch (error) {
         throw new Error(`Couldn't fetch tasks.`)
@@ -58,6 +56,24 @@ export const resolvers = {
         throw new Error(`Couldn't create task.`)
       }
     },
+    editTask: async (_, { id, title, note }, { middlewareAuth, userId }) => {
+      if (!middlewareAuth) throw new Error('Unauthenticated!')
+
+      try {
+        return prisma.task.update({
+          where: {
+            id,
+            createdById: userId,
+          },
+          data: {
+            title,
+            note,
+          },
+        })
+      } catch (error) {
+        throw new Error(`Couldn't edit task.`)
+      }
+    },
     deleteTask: async (_, { id }, { middlewareAuth, userId }) => {
       if (!middlewareAuth) throw new Error('Unauthenticated!')
 
@@ -79,7 +95,6 @@ export const resolvers = {
 
         return true
       } catch (error) {
-        console.error(error)
         throw new Error(`Couldn't delete task.`)
       }
     },

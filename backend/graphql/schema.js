@@ -30,6 +30,7 @@ export const typeDefs = gql`
 
   type Mutation {
     createTask(title: String!, note: String): Task!
+    editTask(id: Int!, title: String!, note: String): Task!
     deleteTask(id: Int!): Boolean!
     createUser(email: String!, password: String!): User!
     login(email: String!, password: String!): AuthData!
