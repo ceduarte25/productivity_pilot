@@ -30,7 +30,6 @@ export default function TaskDetail({ taskId }: { taskId: number }) {
   if (error) {
     if (error.message === 'Unauthenticated!') {
       router.push('/authentication')
-      router.refresh()
       return null
     } else {
       return <ErrorHandler errorMessage={error.message} />

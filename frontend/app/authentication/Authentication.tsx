@@ -15,6 +15,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { ErrorMessage, Spinner } from '../components'
+import { GET_TASKS } from '../_components/TaskList'
 
 const LOGIN_USER = gql`
   mutation LoginUser($email: String!, $password: String!) {
@@ -33,7 +34,12 @@ export default function Authentication() {
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const [loginUser, { error }] = useMutation(LOGIN_USER)
+  const [loginUser, { error }] = useMutation(LOGIN_USER, {
+    onCompleted: () => {
+      router.push('/')
+    },
+    refetchQueries: [{ query: GET_TASKS }],
+  })
 
   const handleLogin = async () => {
     try {
@@ -47,10 +53,8 @@ export default function Authentication() {
       })
 
       localStorage.setItem('token', data.login.token)
-
-      router.push('/')
     } catch (error) {
-      console.error(error)
+      setLoading(false)
     }
   }
 

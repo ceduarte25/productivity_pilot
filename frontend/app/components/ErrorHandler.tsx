@@ -12,10 +12,6 @@ export default function ErrorHandler({
   const router = useRouter()
   const [countdown, setCountdown] = useState(5) // Adjust the countdown duration as needed
 
-  const push = async () => {
-    router.push('/')
-  }
-
   useEffect(() => {
     const countdownInterval = setInterval(() => {
       setCountdown((prevCountdown) => prevCountdown - 1)
@@ -26,9 +22,9 @@ export default function ErrorHandler({
 
   useEffect(() => {
     if (countdown === 0) {
-      push()
+      router.push('/')
     }
-  }, [countdown])
+  }, [countdown, router])
 
   return (
     <ErrorMessage>{`${errorMessage} Redirecting in ${countdown}s...`}</ErrorMessage>

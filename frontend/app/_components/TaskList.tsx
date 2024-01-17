@@ -1,7 +1,7 @@
 'use client'
 
 import { useQuery } from '@apollo/client'
-import { Badge, Box, Card, Flex, Heading, Table, Text } from '@radix-ui/themes'
+import { Box, Card, Flex, Heading, Table, Text } from '@radix-ui/themes'
 import { gql } from 'graphql-tag'
 import { useRouter } from 'next/navigation'
 import { DateBadge, ErrorMessage, Link } from '../components'
@@ -35,7 +35,6 @@ export default function TaskList() {
   if (error) {
     if (error.message === 'Unauthenticated!') {
       router.push('/authentication')
-      router.refresh()
       return null
     } else {
       return <ErrorMessage>{error.message}</ErrorMessage>

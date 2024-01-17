@@ -1,5 +1,5 @@
 import { Flex } from '@radix-ui/themes'
-import { TaskList, CreateTaskButton } from './_components'
+import { CreateTaskButton, TaskList } from './_components'
 
 export default function Home() {
   return (
