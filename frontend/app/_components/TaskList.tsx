@@ -44,11 +44,23 @@ export default function TaskList() {
 
   const tasks = data.tasks
 
+  const noTaskYet = !tasks[0]
+
   return (
     <Card className='p-3'>
       <Heading as='h1'>Task List</Heading>
       <Table.Root>
         <Table.Body>
+          {noTaskYet && (
+            <Table.Row>
+              <Table.Cell>
+                <Text>
+                  You don&apos;t have any created task,{' '}
+                  <Link href='./new_task'>create one</Link> now!
+                </Text>
+              </Table.Cell>
+            </Table.Row>
+          )}
           {tasks.map((task: Task) => (
             <Table.Row key={task.id}>
               <Table.Cell>

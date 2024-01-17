@@ -2,6 +2,7 @@ import { Box, Flex, Grid } from '@radix-ui/themes'
 import { BackButton } from '../components'
 import DeleteButton from './DeleteButton'
 import TaskDetail from './TaskDetail'
+import EditButton from './EditButton'
 
 interface Props {
   params: { id: string }
@@ -17,6 +18,7 @@ export default function TaskDetailPage({ params }: Props) {
       </Box>
       <Flex direction='column' gap='2'>
         <BackButton />
+        <EditButton taskId={id} />
         <DeleteButton taskId={id} />
       </Flex>
     </Grid>
