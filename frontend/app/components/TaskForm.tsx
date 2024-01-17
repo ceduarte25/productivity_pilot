@@ -12,7 +12,7 @@ import {
 } from '@radix-ui/themes'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { BackButton, ErrorMessage, Spinner } from '.'
+import { BackButton, ErrorHandler, ErrorMessage, Spinner } from '.'
 import { client } from '../ApolloClientProvider'
 import { GET_TASK } from '../[id]/TaskDetail'
 import { EDIT_TASK } from '../[id]/edit_task/EditTask'
@@ -35,9 +35,6 @@ export default function TaskForm({ taskId }: { taskId?: number }) {
     onCompleted: () => {
       router.push(push)
     },
-    onError: (error) => {
-      console.error(error.message)
-    },
     refetchQueries: [{ query }],
   })
 
@@ -55,7 +52,6 @@ export default function TaskForm({ taskId }: { taskId?: number }) {
         if (error) {
           if (error.message === 'Unauthenticated!') {
             router.push('/authentication')
-            router.refresh()
             return null
           } else {
             return <ErrorMessage>{error.message}</ErrorMessage>
@@ -78,15 +74,13 @@ export default function TaskForm({ taskId }: { taskId?: number }) {
     try {
       setLoading(true)
 
-      const { data } = await mutateTask({
+      await mutateTask({
         variables: {
           id: taskId,
           title,
           note,
         },
       })
-
-      console.log(isNewTask ? 'Created task:' : 'Edited task:', data)
     } catch (error) {
       setLoading(false)
     }
@@ -130,7 +124,11 @@ export default function TaskForm({ taskId }: { taskId?: number }) {
           </Button>
         </Flex>
       </form>
-      {error && <ErrorMessage>{error.message}</ErrorMessage>}
+      {error?.message === 'Unauthenticated!' ? (
+        <ErrorHandler errorMessage={error.message} />
+      ) : (
+        <ErrorMessage>{error?.message}</ErrorMessage>
+      )}
     </Flex>
   )
 }

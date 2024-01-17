@@ -16,6 +16,9 @@ const config: Config = {
       colors: {
         'carelulu': 'rgba(35,170,170,1.00)',
       },
+      fontWeight: {
+        'md': '425',
+      },
     },
   },
   plugins: [],

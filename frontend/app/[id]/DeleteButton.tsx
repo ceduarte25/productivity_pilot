@@ -25,9 +25,6 @@ export default function DeleteButton({ taskId }: { taskId: number }) {
     onCompleted: () => {
       router.push('/')
     },
-    onError: (error) => {
-      console.error(error.message)
-    },
     refetchQueries: [{ query: GET_TASKS }],
   })
 
@@ -86,7 +83,10 @@ export default function DeleteButton({ taskId }: { taskId: number }) {
             color='gray'
             variant='soft'
             mt='2'
-            onClick={() => setError(false)}
+            onClick={() => {
+              setError(false)
+              setLoading(false)
+            }}
           >
             OK
           </Button>
