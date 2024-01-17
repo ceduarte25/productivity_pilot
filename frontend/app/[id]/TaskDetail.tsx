@@ -5,9 +5,9 @@ import { Box, Card, Flex, Heading, Table, Text } from '@radix-ui/themes'
 import { gql } from 'graphql-tag'
 import { useRouter } from 'next/navigation'
 import { Task } from '../_components/TaskList'
-import { DateBadge, ErrorMessage } from '../components'
+import { DateBadge, ErrorHandler } from '../components'
 
-const GET_TASK = gql`
+export const GET_TASK = gql`
   query GetTask($id: Int) {
     task(id: $id) {
       id
@@ -33,7 +33,7 @@ export default function TaskDetail({ taskId }: { taskId: number }) {
       router.refresh()
       return null
     } else {
-      return <ErrorMessage>{error.message}</ErrorMessage>
+      return <ErrorHandler errorMessage={error.message} />
     }
   }
 

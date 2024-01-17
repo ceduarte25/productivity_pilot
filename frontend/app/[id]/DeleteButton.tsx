@@ -42,7 +42,6 @@ export default function DeleteButton({ taskId }: { taskId: number }) {
       })
     } catch (error) {
       setError(true)
-      console.log(error)
     }
   }
 
@@ -53,7 +52,7 @@ export default function DeleteButton({ taskId }: { taskId: number }) {
           <Button color='red' disabled={loading}>
             <Text size={{ sm: '1', md: '2' }} className='!text-white'>
               {loading && <Spinner />}{' '}
-              <IoIosTrash size={20} className='inline' /> Delete Task
+              <IoIosTrash size={18} className='inline' /> Delete Task
             </Text>
           </Button>
         </AlertDialog.Trigger>
