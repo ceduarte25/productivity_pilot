@@ -26,9 +26,14 @@ export default function Header() {
 
   return (
     <header className='bg-carelulu'>
-      <Container size='3'>
+      <Container>
         <Flex m='1' justify='between' align='center'>
-          <Image src='/carelulu logo.webp' alt='?' width={138} height={35} />
+          <Image
+            src='/carelulu logo.webp'
+            alt='carelulu logo'
+            width={138}
+            height={45}
+          />
           <HoverCard.Root>
             <HoverCard.Trigger>
               <Button size='3' color='amber'>
