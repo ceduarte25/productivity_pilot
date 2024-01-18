@@ -30,7 +30,7 @@ export default function Footer() {
                 </Link>
               ))}
             </Flex>
-            <Button className='!bg-white'>
+            <Button className='!bg-white' asChild>
               <Link
                 href={'https://github.com/ceduarte25/task-list'}
                 target='_blank'

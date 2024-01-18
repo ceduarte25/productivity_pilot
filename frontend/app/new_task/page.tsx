@@ -1,5 +1,5 @@
-import CreateTask from './CreateTask'
+import { TaskForm } from '../components'
 
 export default function CreateTaskPage() {
-  return <CreateTask />
+  return <TaskForm />
 }

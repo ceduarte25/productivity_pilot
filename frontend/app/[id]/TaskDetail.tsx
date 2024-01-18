@@ -2,22 +2,10 @@
 
 import { useQuery } from '@apollo/client'
 import { Box, Card, Flex, Heading, Table, Text } from '@radix-ui/themes'
-import { gql } from 'graphql-tag'
 import { useRouter } from 'next/navigation'
 import { Task } from '../_components/TaskList'
 import { DateBadge, ErrorHandler } from '../components'
-
-export const GET_TASK = gql`
-  query GetTask($id: Int) {
-    task(id: $id) {
-      id
-      title
-      note
-      createdAt
-      createdById
-    }
-  }
-`
+import { GET_TASK } from '../gql'
 
 export default function TaskDetail({ taskId }: { taskId: number }) {
   const router = useRouter()

@@ -14,10 +14,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { BackButton, ErrorHandler, ErrorMessage, Spinner } from '.'
 import { client } from '../ApolloClientProvider'
-import { GET_TASK } from '../[id]/TaskDetail'
-import { EDIT_TASK } from '../[id]/edit_task/EditTask'
-import { GET_TASKS } from '../_components/TaskList'
-import { CREATE_TASK } from '../new_task/CreateTask'
+import { CREATE_TASK, EDIT_TASK, GET_TASK, GET_TASKS } from '../gql'
 
 export default function TaskForm({ taskId }: { taskId?: number }) {
   const router = useRouter()

@@ -1,9 +1,9 @@
-import EditTask from './EditTask'
+import { TaskForm } from '@/app/components'
 
 interface Props {
   params: { id: string }
 }
 
 export default function EditTaskPage({ params }: Props) {
-  return <EditTask taskId={parseInt(params.id)} />
+  return <TaskForm taskId={parseInt(params.id)} />
 }
