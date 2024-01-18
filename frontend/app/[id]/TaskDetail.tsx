@@ -40,7 +40,7 @@ export default function TaskDetail({ taskId }: { taskId: number }) {
 
   return (
     <Card className='p-3'>
-      <Heading as='h1'>Task List</Heading>
+      <Heading as='h1'>Task Detail</Heading>
       <Table.Root>
         <Table.Body>
           <Table.Row>

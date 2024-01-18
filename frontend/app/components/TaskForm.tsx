@@ -68,7 +68,7 @@ export default function TaskForm({ taskId }: { taskId?: number }) {
     if (!isNewTask) {
       fetchTaskDetails()
     }
-  }, [isNewTask, taskId])
+  }, [isNewTask, taskId, router])
 
   const handleMutateTask = async () => {
     try {
