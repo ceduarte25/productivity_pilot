@@ -1,4 +1,5 @@
 import { Box, Flex, Grid } from '@radix-ui/themes'
+import { Metadata } from 'next/types'
 import { BackButton } from '../components'
 import DeleteButton from './DeleteButton'
 import EditButton from './EditButton'
@@ -23,4 +24,13 @@ export default function TaskDetailPage({ params }: Props) {
       </Flex>
     </Grid>
   )
+}
+
+export const metadata: Metadata = {
+  title: 'Task Detail',
+  description: 'View the detail of a specific task.',
+  creator: 'Christian Eduarte',
+  icons: {
+    icon: '/carelulu icon.png',
+  },
 }
