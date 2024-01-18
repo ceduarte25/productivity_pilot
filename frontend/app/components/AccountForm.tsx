@@ -40,16 +40,12 @@ export default function AccountForm() {
         },
       })
 
-      const push = () => {
-        if (isCreateAccount) {
-          router.push('/authentication')
-        } else {
-          localStorage.setItem('token', data.login.token)
-          router.push('/')
-        }
+      if (isCreateAccount) {
+        router.push('/authentication')
+      } else {
+        localStorage.setItem('token', data.login.token)
+        router.push('/')
       }
-
-      push()
     } catch (error) {
       setLoading(false)
     }

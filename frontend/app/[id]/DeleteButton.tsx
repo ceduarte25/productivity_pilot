@@ -6,8 +6,8 @@ import { gql } from 'graphql-tag'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { IoIosTrash } from 'react-icons/io'
-import { GET_TASKS } from '../_components/TaskList'
 import { Spinner } from '../components'
+import { GET_TASKS } from '../gql'
 
 const DELETE_TASK = gql`
   mutation DeleteTask($id: Int!) {

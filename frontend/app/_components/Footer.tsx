@@ -1,4 +1,4 @@
-import { Container, Flex } from '@radix-ui/themes'
+import { Button, Container, Flex, Text } from '@radix-ui/themes'
 import Image from 'next/image'
 import Link from 'next/link'
 import { IconType } from 'react-icons'
@@ -12,11 +12,17 @@ export default function Footer() {
   ]
 
   return (
-    <footer className='bg-carelulu'>
+    <footer className='bg-carelulu fixed bottom-0 w-full p-4'>
       <Container size='3'>
         <Flex justify='between' align='center'>
-          <Image src='/carelulu_footer.webp' alt='?' width={150} height={145} />
-          <Flex direction='column'>
+          <Image
+            src='/carelulu_footer.webp'
+            alt='carelulu footer'
+            width={122}
+            height={105}
+            priority
+          />
+          <Flex direction='column' gap='2'>
             <Flex gap='2'>
               {socials.map((social) => (
                 <Link key={social.href} href={social.href} target='_blank'>
@@ -24,6 +30,14 @@ export default function Footer() {
                 </Link>
               ))}
             </Flex>
+            <Button className='!bg-white' asChild>
+              <Link
+                href={'https://github.com/ceduarte25/task-list'}
+                target='_blank'
+              >
+                <Text className='text-carelulu'>Repository</Text>
+              </Link>
+            </Button>
           </Flex>
         </Flex>
       </Container>
