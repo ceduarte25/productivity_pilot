@@ -10,49 +10,46 @@ import {
   Text,
   TextField,
 } from '@radix-ui/themes'
-import { gql } from 'graphql-tag'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { ErrorMessage, Spinner } from '../components'
-import { GET_TASKS } from '../_components/TaskList'
+import { ErrorMessage, Spinner } from '.'
+import { CREATE_USER, LOGIN_USER } from '../gql'
 
-const LOGIN_USER = gql`
-  mutation LoginUser($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      userId
-      token
-      tokenExpiration
-    }
-  }
-`
-
-export default function Authentication() {
+export default function AccountForm() {
   const router = useRouter()
+  const pathname = usePathname()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const [loginUser, { error }] = useMutation(LOGIN_USER, {
-    onCompleted: () => {
-      router.push('/')
-    },
-    refetchQueries: [{ query: GET_TASKS }],
-  })
+  const isCreateAccount = pathname === '/create_account'
+  const mutation = isCreateAccount ? CREATE_USER : LOGIN_USER
 
-  const handleLogin = async () => {
+  const [mutateUser, { error }] = useMutation(mutation)
+
+  const handleMutateUser = async () => {
     try {
       setLoading(true)
 
-      const { data } = await loginUser({
+      const { data } = await mutateUser({
         variables: {
           email,
           password,
         },
       })
 
-      localStorage.setItem('token', data.login.token)
+      const push = () => {
+        if (isCreateAccount) {
+          router.push('/authentication')
+        } else {
+          localStorage.setItem('token', data.login.token)
+          router.push('/')
+        }
+      }
+
+      push()
     } catch (error) {
       setLoading(false)
     }
@@ -60,21 +57,26 @@ export default function Authentication() {
 
   return (
     <Card className='max-w-md m-10 p-5'>
-      <Heading>Sign in</Heading>
+      <Heading>{isCreateAccount ? 'Sign up' : 'Sign in'}</Heading>
       <form
         className='space-y-3 mt-3'
         onSubmit={(e) => {
           e.preventDefault()
-          handleLogin()
+          handleMutateUser()
         }}
       >
         <Box>
           <Text>Email address</Text>
           <TextField.Root>
             <TextField.Input
-              placeholder='Enter your email'
+              placeholder={
+                isCreateAccount
+                  ? 'Create your email (example@example.com)'
+                  : 'Enter your email'
+              }
               type='email'
               value={email}
+              pattern='[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$'
               required
               onChange={({ target }) => setEmail(target.value)}
             />
@@ -84,22 +86,33 @@ export default function Authentication() {
           <Text>Password</Text>
           <TextField.Root>
             <TextField.Input
-              placeholder='Enter your password'
+              placeholder={
+                isCreateAccount ? 'Create your password' : 'Enter your password'
+              }
               type='password'
               value={password}
               required
+              minLength={8}
               onChange={({ target }) => setPassword(target.value)}
             />
           </TextField.Root>
         </Box>
         <Flex justify='end' gap='2' mt='3'>
           <Button color='amber' variant='soft' asChild>
-            <Link href='/'>
-              <Text className='text-slate-400'>Create an account</Text>
+            <Link
+              href={isCreateAccount ? '/authentication' : '/create_account'}
+            >
+              <Text className='text-slate-400'>
+                {isCreateAccount
+                  ? 'Already have an account?'
+                  : 'Create an account'}
+              </Text>
             </Link>
           </Button>
           <Button color='amber' disabled={loading}>
-            <Text className='text-white'>{loading && <Spinner />} Sign in</Text>
+            <Text className='text-white'>
+              {loading && <Spinner />} {isCreateAccount ? 'Sign up' : 'Sign in'}
+            </Text>
           </Button>
         </Flex>
       </form>

@@ -1,5 +1,6 @@
 // global components
 
+export { default as AccountForm } from './AccountForm'
 export { default as BackButton } from './BackButton'
 export { default as DateBadge } from './DateBadge'
 export { default as ErrorHandler } from './ErrorHandler'

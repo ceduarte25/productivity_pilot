@@ -21,7 +21,7 @@ export default function Header() {
     localStorage.removeItem('token')
 
     setAuthenticated(false)
-    window.location.reload()
+    window.location.replace('/authentication')
   }
 
   return (

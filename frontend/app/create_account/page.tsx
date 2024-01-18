@@ -1,5 +1,5 @@
 import { AccountForm } from '../components'
 
-export default function AuthenticationPage() {
+export default function SignUpPage() {
   return <AccountForm />
 }
