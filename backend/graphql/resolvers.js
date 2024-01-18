@@ -111,7 +111,11 @@ export const resolvers = {
 
         return createdUser
       } catch (error) {
-        throw new Error('User creation failed. Your email may already exist.')
+        throw new Error(
+          `User creation failed. 
+          The provided email address may already associated
+          with an existing user account.`
+        )
       }
     },
     login: async (_, { email, password }) => {
