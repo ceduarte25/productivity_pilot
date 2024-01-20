@@ -18,7 +18,7 @@ I didn't know the techstack of Apollo Client, Apollo GraphQL, so I studied it fi
 
 ## How to use
 
-1. Close the repository (replace "task-list" with "." to clone it in the current directory).
+1. Clone the repository (replace `task-list` with `.` to clone it in the current directory).
 ```
 git clone https://github.com/ceduarte25/task-list.git task-list
 ```
@@ -34,7 +34,7 @@ cd backend
 ```
 npm install
 ```
-3. create a `.env` file in the backend directory and copy the example layout in `.env.example`, then change your username and password according to your MySQL configuration (Make sure to have MySQL installed in your PC). After that you can push prisma to your database.
+3. create a `.env` file in the backend directory (`backend/.env`) and copy the example layout in `.env.example`, then change your username and password according to your MySQL configuration (Make sure to have MySQL installed in your PC). After that you can push prisma to your database.
 ```
 npx prisma db push
 ```
@@ -46,11 +46,12 @@ cd task-list/frontend
 ```
 cd frontend
 ```
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;then run npm install.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;then run npm install again for frontend components.
 ```
 npm install
 ```
 5. Run npm run dev on both terminals that you have opened, for both backend and frontend (Make sure ports 3000 and 3333 are not busy).
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(for frontend directory)`
 ```
 npm run dev
@@ -59,6 +60,7 @@ npm run dev
 ```
 npm run dev
 ```
+6. Visit http://localhost:3000/, then refresh the page one or two times for the components to load. (you don't have to refresh in production environment, but for development environment it is needed)
 
 ---
 
